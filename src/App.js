@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { LocalStorageProvider } from "./store/LocalStorage";
 
+import ListsPage from "./pages/Lists"
+import ItemsPage from "./pages/Items"
+import ErrorPage from "./pages/Error"
+
+import "./App.css";
+
+//---------------------------------------------------------------------
+
+const router = createBrowserRouter([
+  {
+    index: true,
+    errorElement: <ErrorPage />,
+    element: <ListsPage />
+  },
+  {
+    path: "items",
+    element: <ItemsPage />
+  }
+])
+//---------------------------------------------------------------------
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <LocalStorageProvider>
+      <RouterProvider router={router} />
+    </LocalStorageProvider>
+  )
 }
 
 export default App;

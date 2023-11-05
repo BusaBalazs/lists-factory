@@ -1,0 +1,93 @@
+/*-------------------------------------------------------------------
+*** Empty List Section ***
+-------------------------------------------------------------------*/
+
+.empty-list {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: var(--main-orage);
+}
+
+.empty-list p {
+  color: aliceblue;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1em;
+}
+
+.new-list {
+  width: fit-content;
+  padding: 6em;
+  border-radius: 180px;
+  background-color: aliceblue;
+}
+
+/*-------------------------------------------------------------------
+***List Section ***
+-------------------------------------------------------------------*/
+
+header {
+  width: min(100%, 750px);
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin: 0 auto 1rem auto;
+}
+
+.btn-container {
+  width: 6rem;
+  text-align: center;
+  padding: 2em 1em 1em 1em;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  background-color: var(--main-orage);
+  margin-right: 0.5em;
+}
+
+.lists-section{
+  width: min(90%, 700px);
+  margin: auto;
+}
+
+.title {
+  text-align: center;
+  color: var(--main-orage);
+}
+
+/*-------------------------------------------------------------------
+*** Empty style ***
+-------------------------------------------------------------------*/
+
+.add-list-btn-empty {
+  padding: 1.2em 1.5em;
+  border-radius: 50%;
+  background-color: var(--main-orage);
+  color: aliceblue;
+  box-shadow: 0px 2px 10px rgba(115, 56, 0, 0.447) inset;
+}
+
+.add-list-btn-icon-empty {
+  font-size: 4rem;
+}
+
+/*-------------------------------------------------------------------
+*** Style ***
+-------------------------------------------------------------------*/
+
+.add-list-btn {
+  padding: 1.2em 1.5em;
+  border-radius: 50%;
+  
+  color: var(--main-orage);
+  box-shadow: 0px 2px 10px rgba(115, 56, 0, 0.314) inset;
+}
+
+
+.add-list-btn-icon {
+  font-size: 2rem;
+}

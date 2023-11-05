@@ -1,0 +1,6 @@
+input {
+  font-size: 1.3rem;
+  padding: .2em;
+  text-transform: capitalize;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.423) inset;
+}

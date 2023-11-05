@@ -1,0 +1,20 @@
+.backdrop {
+  position: absolute;
+  top: 0px;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.list-name {
+  width: 90%;
+  position: fixed;
+  left: 5%;
+  top: 10rem;
+  padding: 1em;
+  z-index: 30;
+  background-color: aliceblue;
+  box-shadow: 2px 8px 8px rgba(31, 25, 16, 0.624);
+}
