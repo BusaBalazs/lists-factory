@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, {useState, useRef} from "react";
 import { LocalStorageCtx } from "../../store/LocalStorage";
 
 import Button from "../UI/Button";
@@ -15,6 +14,8 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const Lists = () => {
   const [showBackdrop, setShowBackdrop] = useState(false);
+  const listName = useRef();
+
   const {addItemToStorage} = LocalStorageCtx();
 
   const isListEmpty = false;
@@ -30,7 +31,7 @@ const Lists = () => {
   const handlAddListForm = (e) => {
     e.preventDefault();
     addItemToStorage("testList2")
-    console.log("add list");
+    console.log(listName.current.value);
 
     setShowBackdrop(false);
   };
@@ -72,7 +73,7 @@ const Lists = () => {
     <>
       {showBackdrop && (
         <Modal onClick={onHideModal}>
-          <AddInput textContent="Ok" onSubmit={handlAddListForm} />
+          <AddInput ref={listName} textContent="Ok" onSubmit={handlAddListForm} />
         </Modal>
       )}
       {isListEmpty ? emptyList : list}

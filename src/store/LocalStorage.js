@@ -12,6 +12,7 @@ export const LocalStorageCtx = () => {
 export const LocalStorageProvider = (props) => {
   const addItemToStorage = (item) => {
     const id = uuidv4();
+    
     localStorage.setItem(id, item);
   };
 
