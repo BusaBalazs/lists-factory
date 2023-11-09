@@ -6,10 +6,12 @@ import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
-//------------------------------------------------------------------
+//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
 const List = (props) => {
   return (
-    <Link to="items">
+    <Link to={`items/${props.listId}`}>
       <div className="list">
         <p>{props.children}</p>
         <div className="action-btns">
@@ -25,4 +27,5 @@ const List = (props) => {
   );
 };
 
+//-----------------------------------------------------------------------
 export default List;

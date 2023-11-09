@@ -1,5 +1,7 @@
-import React, {useState, useRef} from "react";
-import { LocalStorageCtx } from "../../store/LocalStorage";
+import React, { useState, useRef } from "react";
+//import { LocalStorageCtx } from "../../store/LocalStorage";
+import useList from "../../hook/useLists";
+import { v4 as uuidv4 } from "uuid";
 
 import Button from "../UI/Button";
 import Modal from "../layout/Modal";
@@ -12,13 +14,21 @@ import "./Lists.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
+//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
+
 const Lists = () => {
+  const [addList, setAddList] = useState([]);
   const [showBackdrop, setShowBackdrop] = useState(false);
+  const [alert, setAlert] = useState(false);
+
   const listName = useRef();
+  const lists = useList(addList);
 
-  const {addItemToStorage} = LocalStorageCtx();
+  //const { addItemToStorage } = LocalStorageCtx();
 
-  const isListEmpty = false;
+  const isListEmpty = lists && lists.length === 0 ? true : false 
 
   const handleCreateList = () => {
     setShowBackdrop(true);
@@ -30,12 +40,28 @@ const Lists = () => {
 
   const handlAddListForm = (e) => {
     e.preventDefault();
-    addItemToStorage("testList2")
-    console.log(listName.current.value);
+    const enteredListName = listName.current.value
+
+    if(enteredListName.trim() === "") {
+      setAlert(true)
+      return;
+    }
+
+    setAddList({
+      id: uuidv4(),
+      name: enteredListName,
+      item: [],
+    });
+
+    listName.current.value = "";
 
     setShowBackdrop(false);
   };
 
+  const handleInputFocus = () => {
+    setAlert(false);
+  }
+  //-----------------------------------------------------------------------
   const emptyList = (
     <section className="empty-list">
       <div className="create-list-container">
@@ -51,7 +77,7 @@ const Lists = () => {
       </div>
     </section>
   );
-
+  //-----------------------------------------------------------------------
   const list = (
     <>
       <header>
@@ -63,17 +89,26 @@ const Lists = () => {
       </header>
       <h2 className="title">All List:</h2>
       <section className="lists-section">
-        <List>list1</List>
-        <List>list2</List>
+        {lists && (
+          lists.map(list => {
+            return <List key={list.id} listId={list.id}>{list.name}</List>
+          })
+        )}
       </section>
     </>
   );
-
+  //-----------------------------------------------------------------------
   return (
     <>
       {showBackdrop && (
         <Modal onClick={onHideModal}>
-          <AddInput ref={listName} textContent="Ok" onSubmit={handlAddListForm} />
+          {alert && <p className="alert">Please set a valid list name!</p>}
+          <AddInput
+            onFocus = {handleInputFocus}
+            ref={listName}
+            textContent="Ok"
+            onSubmit={handlAddListForm}
+          />
         </Modal>
       )}
       {isListEmpty ? emptyList : list}
@@ -81,4 +116,5 @@ const Lists = () => {
   );
 };
 
+//-----------------------------------------------------------------------
 export default Lists;

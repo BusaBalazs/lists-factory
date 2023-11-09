@@ -16,7 +16,7 @@ const router = createBrowserRouter([
     element: <ListsPage />
   },
   {
-    path: "items",
+    path: "items/:listId",
     element: <ItemsPage />
   }
 ])
