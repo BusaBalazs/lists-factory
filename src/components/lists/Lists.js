@@ -22,14 +22,17 @@ const Lists = () => {
   const [addList, setAddList] = useState([]);
   const [showBackdrop, setShowBackdrop] = useState(false);
   const [alert, setAlert] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   const listName = useRef();
-  const lists = useList(addList);
+  const lists = useList(addList, isEditing);
 
   //const { addItemToStorage } = LocalStorageCtx();
 
-  const isListEmpty = lists && lists.length === 0 ? true : false 
+  //-----------------------------------------------------------------------
+  const isListEmpty = lists && lists.length === 0 ? true : false;
 
+  //-----------------------------------------------------------------------
   const handleCreateList = () => {
     setShowBackdrop(true);
   };
@@ -38,12 +41,20 @@ const Lists = () => {
     setShowBackdrop(false);
   };
 
-  const handlAddListForm = (e) => {
+  //-----------------------------------------------------------------------
+  const handlSubmitForm = (e) => {
     e.preventDefault();
-    const enteredListName = listName.current.value
 
-    if(enteredListName.trim() === "") {
-      setAlert(true)
+    if (isEditing === true) {
+      setShowBackdrop(false);
+      setIsEditing(false);
+      return;
+    }
+
+    const enteredListName = listName.current.value;
+
+    if (enteredListName.trim() === "") {
+      setAlert(true);
       return;
     }
 
@@ -56,11 +67,19 @@ const Lists = () => {
     listName.current.value = "";
 
     setShowBackdrop(false);
+    setIsEditing(false);
+  };
+
+  //-----------------------------------------------------------------------
+  const handlEdit = () => {
+    setShowBackdrop(true);
+    setIsEditing(true);
   };
 
   const handleInputFocus = () => {
     setAlert(false);
-  }
+  };
+
   //-----------------------------------------------------------------------
   const emptyList = (
     <section className="empty-list">
@@ -77,6 +96,7 @@ const Lists = () => {
       </div>
     </section>
   );
+
   //-----------------------------------------------------------------------
   const list = (
     <>
@@ -89,14 +109,18 @@ const Lists = () => {
       </header>
       <h2 className="title">All List:</h2>
       <section className="lists-section">
-        {lists && (
-          lists.map(list => {
-            return <List key={list.id} listId={list.id}>{list.name}</List>
-          })
-        )}
+        {lists &&
+          lists.map((list) => {
+            return (
+              <List key={list.id} listId={list.id} onClick={handlEdit}>
+                {list.name}
+              </List>
+            );
+          })}
       </section>
     </>
   );
+
   //-----------------------------------------------------------------------
   return (
     <>
@@ -104,10 +128,10 @@ const Lists = () => {
         <Modal onClick={onHideModal}>
           {alert && <p className="alert">Please set a valid list name!</p>}
           <AddInput
-            onFocus = {handleInputFocus}
+            onFocus={handleInputFocus}
             ref={listName}
             textContent="Ok"
-            onSubmit={handlAddListForm}
+            onSubmit={handlSubmitForm}
           />
         </Modal>
       )}

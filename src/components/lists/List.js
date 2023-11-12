@@ -5,25 +5,29 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import Button from "../UI/Button";
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 const List = (props) => {
+ 
   return (
-    <Link to={`items/${props.listId}`}>
-      <div className="list">
-        <p>{props.children}</p>
+    <>
+      <div className="list-container">
+        <Link to={`items/${props.listId}`} className="link">
+          <p>{props.children}</p>
+        </Link>
         <div className="action-btns">
-          <span className="icon">
+          <Button className="icon" onClick={props.onClick}>
             <FontAwesomeIcon icon={faPenToSquare} />
-          </span>
-          <span className="icon">
+          </Button>
+          <Button className="icon">
             <FontAwesomeIcon icon={faTrashCan} />
-          </span>
+          </Button>
         </div>
       </div>
-    </Link>
+    </>
   );
 };
 
