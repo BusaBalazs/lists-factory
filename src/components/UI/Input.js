@@ -11,7 +11,7 @@ const Input = forwardRef((props, ref) => {
       <label htmlFor={props.id} className={props.className}>
         {props.label}
       </label>
-      <input onFocus={props.onFocus} ref={ref} id={props.id} type="text" className={props.className} required/>
+      <input onChange={props.onChange} value={props.value} onFocus={props.onFocus} ref={ref} id={props.id} type="text" className={props.className} required/>
     </>
   );
 });

@@ -11,7 +11,6 @@ import Button from "../UI/Button";
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 const List = (props) => {
- 
   return (
     <>
       <div className="list-container">
@@ -19,10 +18,18 @@ const List = (props) => {
           <p>{props.children}</p>
         </Link>
         <div className="action-btns">
-          <Button className="icon" onClick={props.onClick}>
+          <Button
+            className="icon"
+            onClick={props.onEditing}
+            dataId={props.listId}
+          >
             <FontAwesomeIcon icon={faPenToSquare} />
           </Button>
-          <Button className="icon">
+          <Button
+            className="icon"
+            onClick={props.onDelete}
+            dataId={props.listId}
+          >
             <FontAwesomeIcon icon={faTrashCan} />
           </Button>
         </div>

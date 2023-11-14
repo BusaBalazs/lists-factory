@@ -19,65 +19,98 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 //-----------------------------------------------------------------------
 
 const Lists = () => {
-  const [addList, setAddList] = useState([]);
+  const [actionList, setActionList] = useState([]);
   const [showBackdrop, setShowBackdrop] = useState(false);
   const [alert, setAlert] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
+
+  const [editId, setEditId] = useState(null);
+  const [value, setValue] = useState("");
 
   const listName = useRef();
-  const lists = useList(addList, isEditing);
 
-  //const { addItemToStorage } = LocalStorageCtx();
+  const lists = useList(actionList);
 
   //-----------------------------------------------------------------------
   const isListEmpty = lists && lists.length === 0 ? true : false;
+
+  //-----------------------------------------------------------------------
+  const statesInit = () => {
+    setValue("");
+    setShowBackdrop(false);
+    setEditId(null);
+    setDeleteId(null);
+  };
 
   //-----------------------------------------------------------------------
   const handleCreateList = () => {
     setShowBackdrop(true);
   };
 
+  //-----------------------------------------------------------------------
   const onHideModal = () => {
     setShowBackdrop(false);
+  };
+
+  //-----------------------------------------------------------------------
+  const handleChange = (e) => {
+    setValue(e.currentTarget.value);
+  };
+
+  //-----------------------------------------------------------------------
+  const handlEdit = (e) => {
+    setShowBackdrop(true);
+    setEditId(e.currentTarget.getAttribute("data-id"));
+    for (const item of lists) {
+      if (item.id === e.currentTarget.getAttribute("data-id")) {
+        setValue(item.name);
+      }
+    }
+  };
+
+  //-----------------------------------------------------------------------
+  const handlDeleting = (e) => {
+    setShowBackdrop(true);
+    setDeleteId(e.currentTarget.getAttribute("data-id"));
+    if (deleteId !== null) {
+      setActionList({
+        deleteId: deleteId,
+      });
+      statesInit();
+    }
+  };
+
+  //-----------------------------------------------------------------------
+  const handleInputFocus = () => {
+    setAlert(false);
   };
 
   //-----------------------------------------------------------------------
   const handlSubmitForm = (e) => {
     e.preventDefault();
 
-    if (isEditing === true) {
-      setShowBackdrop(false);
-      setIsEditing(false);
-      return;
-    }
-
-    const enteredListName = listName.current.value;
-
-    if (enteredListName.trim() === "") {
+    if (value.trim() === "") {
       setAlert(true);
       return;
     }
 
-    setAddList({
+    if (editId !== null) {
+      setActionList({
+        id: editId,
+        name: value,
+        isEditing: true,
+      });
+      statesInit();
+      return;
+    }
+
+    setActionList({
       id: uuidv4(),
-      name: enteredListName,
+      name: value,
       item: [],
     });
 
-    listName.current.value = "";
-
-    setShowBackdrop(false);
-    setIsEditing(false);
-  };
-
-  //-----------------------------------------------------------------------
-  const handlEdit = () => {
-    setShowBackdrop(true);
-    setIsEditing(true);
-  };
-
-  const handleInputFocus = () => {
-    setAlert(false);
+    statesInit();
   };
 
   //-----------------------------------------------------------------------
@@ -108,16 +141,44 @@ const Lists = () => {
         </div>
       </header>
       <h2 className="title">All List:</h2>
-      <section className="lists-section">
+      <ul className="lists-section">
         {lists &&
           lists.map((list) => {
             return (
-              <List key={list.id} listId={list.id} onClick={handlEdit}>
-                {list.name}
-              </List>
+              <li key={list.id}>
+                <List
+                  listId={list.id}
+                  onEditing={handlEdit}
+                  onDelete={handlDeleting}
+                >
+                  {list.name}
+                </List>
+              </li>
             );
           })}
-      </section>
+      </ul>
+    </>
+  );
+
+  //-----------------------------------------------------------------------
+  const modalInput = (
+    <AddInput
+      onFocus={handleInputFocus}
+      ref={listName}
+      textContent="Ok"
+      onSubmit={handlSubmitForm}
+      onChange={handleChange}
+      value={value}
+    />
+  );
+
+  //-----------------------------------------------------------------------
+  const modalDelete = (
+    <>
+      <p>Are you sure to delete?</p>
+      <Button onClick={handlDeleting} className="btn">
+        Delete
+      </Button>
     </>
   );
 
@@ -127,12 +188,7 @@ const Lists = () => {
       {showBackdrop && (
         <Modal onClick={onHideModal}>
           {alert && <p className="alert">Please set a valid list name!</p>}
-          <AddInput
-            onFocus={handleInputFocus}
-            ref={listName}
-            textContent="Ok"
-            onSubmit={handlSubmitForm}
-          />
+          {deleteId === null ? modalInput : modalDelete}
         </Modal>
       )}
       {isListEmpty ? emptyList : list}
