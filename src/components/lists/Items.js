@@ -50,7 +50,7 @@ const Items = () => {
 
     setValue("");
   };
-  
+
   //-----------------------------------------------------------------------
   return (
     <>
@@ -61,13 +61,15 @@ const Items = () => {
           </nav>
         </header>
       </Link>
-      <AddInput
-        onSubmit={handlSubmit}
-        onChange={handlChange}
-        textContent="Add"
-        label={`Add item to ${listInit && listInit[0].name}`}
-        value={value}
-      />
+      <section className="item-input">
+        <AddInput
+          onSubmit={handlSubmit}
+          onChange={handlChange}
+          textContent="Add"
+          label={`Add item to ${listInit && listInit[0].name}`}
+          value={value}
+        />
+      </section>
       <section className="items-container">
         <Item>dsd</Item>
         <Item>dsds</Item>

@@ -10,10 +10,14 @@
   color: aliceblue;
 }
 
+.item-input {
+  margin-top: 1.5em;
+}
+
 .items-container {
   width: min(90%, 650px);
   position: relative;
-  background-color: antiquewhite;
+  background-color: rgb(250, 245, 238);
   padding: 1em;
   margin:1.2em auto;
   border-radius: 5px;

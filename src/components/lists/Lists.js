@@ -50,6 +50,7 @@ const Lists = () => {
   //-----------------------------------------------------------------------
   const onHideModal = () => {
     setShowBackdrop(false);
+    statesInit();
   };
 
   //-----------------------------------------------------------------------
@@ -72,6 +73,13 @@ const Lists = () => {
   const handlDeleting = (e) => {
     setShowBackdrop(true);
     setDeleteId(e.currentTarget.getAttribute("data-id"));
+
+    for (const item of lists) {
+      if (item.id === e.currentTarget.getAttribute("data-id")) {
+        setValue(item.name);
+      }
+    }
+
     if (deleteId !== null) {
       setActionList({
         deleteId: deleteId,
@@ -176,7 +184,7 @@ const Lists = () => {
   //-----------------------------------------------------------------------
   const modalDelete = (
     <>
-      <p>Are you sure to delete?</p>
+      <p>{`Are you sure to delete the "${value}" list?`}</p>
       <Button onClick={handlDeleting} className="btn">
         Delete
       </Button>

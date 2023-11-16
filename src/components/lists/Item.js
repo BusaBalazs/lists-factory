@@ -28,7 +28,7 @@ const Item = (props) => {
           <Button
             className="icon"
             onClick={props.onDelete}
-            dataId={props.listId}
+            dataId={props.itemId}
           >
             <FontAwesomeIcon icon={faTrashCan} />
           </Button>
