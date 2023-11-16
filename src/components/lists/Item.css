@@ -1,0 +1,10 @@
+.item-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1.2em 0;
+}
+
+.item-name {
+  text-transform: capitalize;
+}

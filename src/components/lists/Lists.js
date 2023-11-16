@@ -133,7 +133,7 @@ const Lists = () => {
   //-----------------------------------------------------------------------
   const list = (
     <>
-      <header>
+      <header className="lists-header">
         <div className="btn-container">
           <Button className="add-list-btn" onClick={handleCreateList}>
             <FontAwesomeIcon icon={faPlus} className="add-list-btn-icon" />
@@ -169,6 +169,7 @@ const Lists = () => {
       onSubmit={handlSubmitForm}
       onChange={handleChange}
       value={value}
+      label="List Name"
     />
   );
 

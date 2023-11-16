@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 
-const useList = (data) => {
+const useList = (data, item) => {
   const [lists, setLists] = useState();
 
   useEffect(() => {
@@ -15,12 +15,11 @@ const useList = (data) => {
         : [];
 
       //----------DELETING------------------------------------------------
-      
       if (data && data.deleteId) {
-        const newData = getData.filter(item => item.id !== data.deleteId);
+        const newData = getData.filter((item) => item.id !== data.deleteId);
         localStorage.setItem("list", JSON.stringify(newData));
         setLists(newData);
-        return
+        return;
       }
 
       //----------EDITING------------------------------------------------
@@ -35,6 +34,17 @@ const useList = (data) => {
         return;
       }
 
+      if (item) {
+        for (const listItem of getData) {
+          if (item.listId === listItem.id) {
+            listItem.item = [...listItem.item, item.items];
+          }
+          //localStorage.setItem("list", JSON.stringify(getData));
+          //setLists(getData);
+          //console.log(getData);
+        }
+      }
+
       //----------ADD NEW LIST ITEM--------------------------------------
       if (data && data.id !== undefined) {
         getData.push(data);
@@ -44,7 +54,7 @@ const useList = (data) => {
     };
 
     return newList();
-  }, [data]);
+  }, [data, item]);
 
   return lists;
 };

@@ -18,6 +18,7 @@
   font-size: 1.2rem;
   color: var(--main-orage);
   margin-left: .8em;
+  background: transparent;
 }
 
 .link {
