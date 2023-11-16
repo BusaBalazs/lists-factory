@@ -23,8 +23,10 @@ const Items = () => {
 
   //-----------------------------------------------------------------------
   let listInit;
+  let items;
   if (lists) {
     listInit = lists.filter((item) => item.id === listId);
+    items = listInit[0].item;
   }
 
   //-----------------------------------------------------------------------
@@ -70,10 +72,20 @@ const Items = () => {
           value={value}
         />
       </section>
-      <section className="items-container">
-        <Item>dsd</Item>
-        <Item>dsds</Item>
-      </section>
+      {items && items.length === 0 ? (
+        <></>
+      ) : (
+        <section className="items-container">
+          {items &&
+            items.map((item) => {
+              return (
+                <Item itemId={item.itemId} key={item.itemId}>
+                  {item.value}
+                </Item>
+              );
+            })}
+        </section>
+      )}
     </>
   );
 };

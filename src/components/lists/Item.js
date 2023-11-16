@@ -21,7 +21,7 @@ const Item = (props) => {
           <Button
             className="icon"
             onClick={props.onEditing}
-            dataId={props.listId}
+            dataId={props.itemId}
           >
             <FontAwesomeIcon icon={faPenToSquare} />
           </Button>
