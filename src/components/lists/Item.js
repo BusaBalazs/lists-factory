@@ -16,7 +16,7 @@ const Item = ({children, onDone, onDelete, onEditing, itemId}) => {
   return (
     <>
       <div className="item-container">
-      <p className="item-name" onClick={onDone}>{children}</p>
+      <p className="item-name" onClick={onDone} data-id={itemId}>{children}</p>
         <div className="action-btns">
           <Button
             className="icon"

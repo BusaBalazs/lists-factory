@@ -8,7 +8,7 @@ import Item from "./Item";
 import { v4 as uuidv4 } from "uuid";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faCircleArrowLeft, faCheck } from "@fortawesome/free-solid-svg-icons";
 
 import "./Items.css";
 
@@ -20,7 +20,6 @@ const Items = () => {
   const [value, setValue] = useState("");
   const [editId, setEditId] = useState();
   const [alert, setAlert] = useState(false);
-  const [isDone, setIsDone] = useState(false);
 
   const { listId } = useParams();
   const lists = useList(null, item);
@@ -60,10 +59,20 @@ const Items = () => {
 
   //-----------------------------------------------------------------------
   const handlDone = (e) => {
-    setIsDone((pre) => !pre);
+    setEditId(true);
+
+    items
+      .filter((item) => item.itemId === e.currentTarget.getAttribute("data-id"))
+      .map((item) => (item.complete = !item.complete));
+
+    setItem({
+      editId: e.currentTarget.getAttribute("data-id"),
+      listId: listId,
+      items: items,
+    });
+
+    setEditId();
   };
-  
-  
 
   //-----------------------------------------------------------------------
   const handlSubmit = (e) => {
@@ -97,6 +106,7 @@ const Items = () => {
       listId: listId,
       items: {
         itemId: uuidv4(),
+        complete: false,
         value: value,
       },
     });
@@ -138,8 +148,8 @@ const Items = () => {
                   onEditing={handlEdit}
                   onDone={handlDone}
                 >
-                  {isDone && "+"}
                   {item.value}
+                  {item.complete && <FontAwesomeIcon icon={faCheck} className="check"/>}
                 </Item>
               );
             })}
