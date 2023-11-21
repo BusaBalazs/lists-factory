@@ -12,23 +12,23 @@ import "./Item.css"
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-const Item = (props) => {
+const Item = ({children, onDone, onDelete, onEditing, itemId}) => {
   return (
     <>
       <div className="item-container">
-      <p className="item-name">{props.children}</p>
+      <p className="item-name" onClick={onDone}>{children}</p>
         <div className="action-btns">
           <Button
             className="icon"
-            onClick={props.onEditing}
-            dataId={props.itemId}
+            onClick={onEditing}
+            dataId={itemId}
           >
             <FontAwesomeIcon icon={faPenToSquare} />
           </Button>
           <Button
             className="icon"
-            onClick={props.onDelete}
-            dataId={props.itemId}
+            onClick={onDelete}
+            dataId={itemId}
           >
             <FontAwesomeIcon icon={faTrashCan} />
           </Button>

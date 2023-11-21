@@ -19,6 +19,8 @@ const Items = () => {
   const [item, setItem] = useState();
   const [value, setValue] = useState("");
   const [editId, setEditId] = useState();
+  const [alert, setAlert] = useState(false);
+  const [isDone, setIsDone] = useState(false);
 
   const { listId } = useParams();
   const lists = useList(null, item);
@@ -34,6 +36,7 @@ const Items = () => {
   //-----------------------------------------------------------------------
   const handlChange = (e) => {
     setValue(e.currentTarget.value);
+    setAlert(false);
   };
 
   //-----------------------------------------------------------------------
@@ -56,11 +59,19 @@ const Items = () => {
   };
 
   //-----------------------------------------------------------------------
+  const handlDone = (e) => {
+    setIsDone((pre) => !pre);
+  };
+  
+  
+
+  //-----------------------------------------------------------------------
   const handlSubmit = (e) => {
     e.preventDefault();
 
     //-----------------------------------------------------------------------
     if (value.trim() === "") {
+      setAlert(true);
       return;
     }
 
@@ -111,6 +122,7 @@ const Items = () => {
           label={`Add item to ${listInit && listInit[0].name}`}
           value={value}
         />
+        {alert && <p className="alert">Please set a valid list name!</p>}
       </section>
       {items && items.length === 0 ? (
         <></>
@@ -124,7 +136,9 @@ const Items = () => {
                   key={item.itemId}
                   onDelete={handlDelete}
                   onEditing={handlEdit}
+                  onDone={handlDone}
                 >
+                  {isDone && "+"}
                   {item.value}
                 </Item>
               );

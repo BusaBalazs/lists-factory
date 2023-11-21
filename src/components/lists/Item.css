@@ -5,6 +5,15 @@
   margin: 1.2em 0;
 }
 
+.item-name::after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: min(60%, 250px);
+  height: 1px;
+  background-color: rgba(226, 113, 0, 0.487);
+}
+
 .item-name {
   text-transform: capitalize;
 }

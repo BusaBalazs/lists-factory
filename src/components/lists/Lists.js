@@ -56,6 +56,7 @@ const Lists = () => {
   //-----------------------------------------------------------------------
   const handleChange = (e) => {
     setValue(e.currentTarget.value);
+    setAlert(false);
   };
 
   //-----------------------------------------------------------------------
@@ -86,11 +87,6 @@ const Lists = () => {
       });
       statesInit();
     }
-  };
-
-  //-----------------------------------------------------------------------
-  const handleInputFocus = () => {
-    setAlert(false);
   };
 
   //-----------------------------------------------------------------------
@@ -171,7 +167,6 @@ const Lists = () => {
   //-----------------------------------------------------------------------
   const modalInput = (
     <AddInput
-      onFocus={handleInputFocus}
       ref={listName}
       textContent="Ok"
       onSubmit={handlSubmitForm}
