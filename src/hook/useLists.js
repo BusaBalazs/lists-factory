@@ -47,18 +47,28 @@ const useList = (data, item) => {
       }
 
       //----------EDIT ITEM------------------------------------------------
-     if (item && item.editId) {
-       for (const listItem of getData) {
+      if (item && item.editId) {
+        for (const listItem of getData) {
           if (item.listId === listItem.id) {
-            listItem.item = item.items
+            listItem.item = item.items;
           }
         }
-        
+
         updateData(getData);
         return;
       }
 
       //----------DELETE ITEM------------------------------------------------
+      if (item && item.deleteAll === true) {
+        for (const listItem of getData) {
+          if (listItem.id === item.listId) {
+            listItem.item = [];
+          }
+        }
+        updateData(getData);
+        return;
+      }
+
       if (item && item.deleteId) {
         let items;
         for (const listItem of getData) {

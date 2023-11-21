@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft, faCheck } from "@fortawesome/free-solid-svg-icons";
 
 import "./Items.css";
+import Button from "../UI/Button";
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
@@ -56,6 +57,14 @@ const Items = () => {
       deleteId: itemId,
     });
   };
+
+  //-----------------------------------------------------------------------
+  const handlDeleteAll = () => {
+    setItem({
+      deleteAll: true,
+      listId: listId,
+    })
+  }
 
   //-----------------------------------------------------------------------
   const handlDone = (e) => {
@@ -153,6 +162,7 @@ const Items = () => {
                 </Item>
               );
             })}
+            <Button className="clear-btn" onClick={handlDeleteAll}>Clear All</Button>
         </section>
       )}
     </>

@@ -52,3 +52,14 @@
   color: rgb(0, 255, 0);
   margin: 0 .2em;
 }
+
+.clear-btn {
+  font-size: 1rem;
+  display: block;
+  margin: 2em auto 0 auto;
+  padding: .2em 1em;
+  border-radius: 5px;
+  background-color: rgb(255, 255, 255);
+  color: red;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.317);
+}
