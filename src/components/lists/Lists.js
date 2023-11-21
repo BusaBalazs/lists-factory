@@ -148,7 +148,7 @@ const Lists = () => {
           </Button>
         </div>
       </header>
-      <h2 className="title">All List:</h2>
+      <h2 className="title">All Lists:</h2>
       <ul className="lists-section">
         {lists &&
           lists.map((list) => {

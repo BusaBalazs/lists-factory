@@ -18,6 +18,8 @@ import "./Items.css";
 const Items = () => {
   const [item, setItem] = useState();
   const [value, setValue] = useState("");
+  const [editId, setEditId] = useState();
+
   const { listId } = useParams();
   const lists = useList(null, item);
 
@@ -35,13 +37,51 @@ const Items = () => {
   };
 
   //-----------------------------------------------------------------------
+
+  const handlEdit = (e) => {
+    setEditId(e.currentTarget.getAttribute("data-id"));
+    for (const item of items) {
+      if (item.itemId === e.currentTarget.getAttribute("data-id")) {
+        setValue(item.value);
+      }
+    }
+  };
+  //-----------------------------------------------------------------------
+  const handlDelete = (e) => {
+    const itemId = e.currentTarget.getAttribute("data-id");
+    setItem({
+      listId: listId,
+      deleteId: itemId,
+    });
+  };
+
+  //-----------------------------------------------------------------------
   const handlSubmit = (e) => {
     e.preventDefault();
 
+    //-----------------------------------------------------------------------
     if (value.trim() === "") {
       return;
     }
 
+    //-----------------------------------------------------------------------
+    if (editId) {
+      items
+        .filter((item) => item.itemId === editId)
+        .map((item) => (item.value = value));
+
+      setItem({
+        editId,
+        listId: listId,
+        items: items,
+      });
+
+      setEditId();
+      setValue("");
+      return;
+    }
+
+    //-----------------------------------------------------------------------
     setItem({
       listId: listId,
       items: {
@@ -67,7 +107,7 @@ const Items = () => {
         <AddInput
           onSubmit={handlSubmit}
           onChange={handlChange}
-          textContent="Add"
+          textContent={!editId ? "Add" : "Edit"}
           label={`Add item to ${listInit && listInit[0].name}`}
           value={value}
         />
@@ -79,7 +119,12 @@ const Items = () => {
           {items &&
             items.map((item) => {
               return (
-                <Item itemId={item.itemId} key={item.itemId}>
+                <Item
+                  itemId={item.itemId}
+                  key={item.itemId}
+                  onDelete={handlDelete}
+                  onEditing={handlEdit}
+                >
                   {item.value}
                 </Item>
               );
