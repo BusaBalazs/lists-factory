@@ -40,7 +40,6 @@ const Items = () => {
   };
 
   //-----------------------------------------------------------------------
-
   const handlEdit = (e) => {
     setEditId(e.currentTarget.getAttribute("data-id"));
     for (const item of items) {
@@ -49,6 +48,7 @@ const Items = () => {
       }
     }
   };
+
   //-----------------------------------------------------------------------
   const handlDelete = (e) => {
     const itemId = e.currentTarget.getAttribute("data-id");
